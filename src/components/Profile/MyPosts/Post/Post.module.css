@@ -1,0 +1,9 @@
+.item{
+  color: rgb(160, 160, 160);
+}
+
+.postimage {
+width: 75px;
+height: 75px;
+border-radius: 50%;
+}
