@@ -3,6 +3,7 @@ import Preloader from "../../common/Preloader/Preloader";
 import s from './ProfileInfo.module.css';
 import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import userPhoto from '../../../assets/images/user.png'
 
 
 const ProfileInfo = (props) => {
@@ -10,6 +11,13 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return <Preloader />
   }
+// Mozliwosc zmiany foto
+  const onMainPhotoSelector =(e)=>{
+    if (e.target.files.length) {
+      props.savePhoto(e.target.files[0]);
+    }
+  }
+  // =====
 
   return (
     <div>
@@ -19,7 +27,8 @@ const ProfileInfo = (props) => {
 
       <div className={s.descriptioneBlock}>
 
-        <img src={props.profile.photos.large} />
+        <img src={props.profile.photos.large  || userPhoto} className={s.mainPhoto} />
+        {props.isOwner && <input type={'file'} onClick={onMainPhotoSelector}/>}
 
         {props.profile.aboutMe}
         {props.profile.contacts.facebook}
