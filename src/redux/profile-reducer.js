@@ -82,6 +82,14 @@ export const updateStatus = (status) => async (dispach) => {
                       dispach(savePhotoSuccess(response.data.data.photos));
                   }       
       }
+ //Zmiana profile info na stronie mego profila     
+      export const saveProfile = (profile) => async (dispach, getState) => {
+        const userId = getState().auth.userId;
+        let response = await profileAPI.saveProfile(profile)       
+                  if(response.data.resultCode === 0) {
+                     dispach(getUserProfile(userId))
+                  }       
+      }
 
 
 
