@@ -45,8 +45,18 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 class App extends Component {
 
+  catchAllUnhandledErrors = (promiseRejectioEvent)=>{
+    alert('Same error')
+  }
+
     componentDidMount() {
     this.props.initializeApp();
+    // tak mozna lapac blądy 
+    //window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+}
+componentWillUnmount() {
+  // musisz to odrazu usuwac 
+ // window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors);
 }
 
   render(){
@@ -67,7 +77,12 @@ if (this.props.initialized){
                 <ProfileContainer />
               </Suspense>
           } />
+                    <Route exact path="/" element={
           
+          <Suspense fallback={<Preloader/>}>
+                <ProfileContainer />
+              </Suspense>
+          } />
           <Route path='/profile/:userId' element={<ProfileContainer />} />
           {/* Na tym etapie on robi hok withSuspens i czerez niego robi to co nizej ja tez mam ten hok ale jego nie urzywam */}
           <Route path='/dialogs/*' element={ 
@@ -77,6 +92,7 @@ if (this.props.initialized){
           } />
           <Route path='/users/*' element={<UsersContainer />} />
           <Route path='/Login/' element={<LoginPage />} />
+          <Route path='*' element={<div>404 Not found</div>} />
         </Routes>
       </div>
     </div>
